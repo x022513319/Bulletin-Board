@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My BulletinBoard</title>
+
+    <link rel="stylesheet" href="style.css">
+    <style ></style>
+</head>
+<body>
+
+    <div class="nav">
+        <% if (!loggedIn){ %>
+            <a href="#" id="log-in">登入</a>
+            <a href="#" id="sign-up">註冊</a>
+        <% } else{ %>
+            <a href="#" id="log-out">登出</a>
+        <% } %>
+    </div>
+
+
+    <!-- 登入 -->
+    <div class="full-screen" id="log-in-full-screen">
+        <div class="dialog" id="log-in-dialog">
+            <div class="item">
+                <a href="#" class="close-btn" data-target="log-in-full-screen"><img src="close-button-png02.png" class="close" alt=""></a>
+                <h3>登入</h3>
+            </div>
+            <hr>
+            <form class="form-class" action="">
+                <input type="text" id="log-in-email" placeholder="電子郵件">
+                <input type="password" id="log-in-password" placeholder="密碼">
+            </form>
+            <div class="item" id="log-in-btn">
+                <!-- 登入 -->
+                <a class="" id="log-in-text"><h3 id="">登入</h3></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 註冊 -->
+    <div class="full-screen" id="sign-up-full-screen">
+        <div class="dialog" id="sign-up-dialog">
+            <div class="item">
+                <a href="#" class="close-btn" data-target="sign-up-full-screen"><img src="close-button-png02.png" class="close" alt=""></a>
+                <h3>註冊</h3>
+            </div>
+            <hr>
+            <form class="form-class" action="">
+                <!-- <input type="text" id="email" placeholder="電子郵件">
+                <input type="password" id="password" placeholder="設定密碼"> -->
+                <input type="text" id="sign-up-email" placeholder="電子郵件">
+                <input type="password" id="sign-up-password" placeholder="設定密碼">
+            </form>
+            <div class="item" id="sign-up-btn">
+                <!-- 註冊 -->
+                <a class="" id="sign-up-text"><h3 id="">註冊</h3></a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- 建立貼文 -->
+    <div class="wrap">
+        <a class="btn hidden" id="write"><h3>寫點什麼</h3></button>
+        <!-- <a class="btn" id="record">檢視過往文章</button> -->
+    </div>
+
+    
+    <div class="full-screen" id="full-screen">
+        <div class="dialog" id="dialog">
+            <div class="item">
+                <a href="#" class="close-btn" data-target="full-screen"><img src="close-button-png02.png" class="close" alt=""></a>
+                <h3>建立貼文</h3>
+            </div>
+            <hr>
+            <div class="item">
+                <textarea name="" id="content" cols="30" rows="10" placeholder="在想什麼呢？"></textarea>
+            </div>
+            <div class="item" id="emoji-box">
+                    <img src="EMOJI2.png" id="emoji" alt="" style="">
+            </div>
+            <div class="func-append">
+                <h3>新增到貼文</h3>
+                <div class="func">
+                    <img src="picture.png" id="get-pic-btn" alt="">
+                    <input type="file" id="picInput" accept="image/*" title="選擇圖片" style="display: none;">
+                    <img src="GIF.png" alt="">
+                </div>
+            </div>
+            <div class="item post" id="post-btn">
+                <!-- 發佈 -->
+                <a class="" id="post"><h3 id="post-text">發佈</h3></a>
+            </div>
+            <div id="emojiContainer" style="position: relative;"></div>
+        </div>
+    </div>
+
+
+    <div class="list" id="list">
+        <% if (!loggedIn) { %>
+            <div class="record">
+                <h3>時間</h3>
+                <hr>
+                <p>快來建立屬於你自己的文章吧！</p>
+            </div>
+            <div class="record">
+                <h3>時間</h3>
+                <hr>
+                <p>asdfghjhasdfghjhasdfghjhasdfghjhasdfghjhasdfghjh</p>
+            </div>
+        <% } else{ %>
+            <!-- <div class="record">
+                <h3>時間</h3>
+                <hr>
+                <p>嗨，<%= username %>，你已經登入，可以開始寫文章囉！</p>
+            </div> -->
+        <% } %>
+    </div>
+            <!-- <div class="record">
+                <h3>時間</h3>
+                <hr>
+                <p>快來建立屬於你自己的文章吧！</p>
+            </div>
+            <div class="record">
+                <h3>時間</h3>
+                <hr>
+                <p>asdfghjhasdfghjhasdfghjhasdfghjhasdfghjhasdfghjh</p>
+            </div> -->
+    
+    <div id="posts" style="display:none">
+        <%= JSON.stringify(posts) %>
+    </div>
+            
+    <script src="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.js"></script>
+    <script src="../script.js"></script>
+    <script>
+        <% if(loggedIn) { %>
+            document.getElementById('log-out').addEventListener('click', handleLogout);
+            document.getElementById('write').style.display = 'flex';
+
+            const posts = JSON.parse(document.getElementById('posts').textContent);
+            const listElement = document.getElementById('list');
+            posts.forEach(post =>{
+                const postTime = new Date(post.postTime);
+
+                const postElement = document.createElement('div');
+                postElement.classList.add('record');
+                postElement.innerHTML =
+                `  
+                <h3>${postTime}</h3>
+                <hr>
+                <p>${post.content}</p>
+                `;
+                listElement.appendChild(postElement);
+
+            })
+
+            document.getElementById('emoji').addEventListener('click', emojiFunc);
+            
+        <% } else { %>
+            document.getElementById('log-in').addEventListener('click', handleLogin);
+            document.getElementById('sign-up').addEventListener('click', handleSignup);
+        <% } %>
+
+
+
+    </script>
+</body>
+</html>
