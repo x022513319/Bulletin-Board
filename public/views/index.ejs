@@ -48,8 +48,6 @@
             </div>
             <hr>
             <form class="form-class" action="">
-                <!-- <input type="text" id="email" placeholder="電子郵件">
-                <input type="password" id="password" placeholder="設定密碼"> -->
                 <input type="text" id="sign-up-email" placeholder="電子郵件">
                 <input type="password" id="sign-up-password" placeholder="設定密碼">
             </form>
@@ -65,7 +63,6 @@
     <!-- 建立貼文 -->
     <div class="wrap">
         <a class="btn hidden" id="write"><h3>寫點什麼</h3></button>
-        <!-- <a class="btn" id="record">檢視過往文章</button> -->
     </div>
 
     
@@ -109,27 +106,11 @@
             <div class="record">
                 <h3>時間</h3>
                 <hr>
-                <p>asdfghjhasdfghjhasdfghjhasdfghjhasdfghjhasdfghjh</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore rem nemo quidem iste voluptas consectetur aliquid corrupti alias culpa nihil tenetur repellendus at atque, impedit tempora, consequatur, itaque autem ullam.</p>
             </div>
-        <% } else{ %>
-            <!-- <div class="record">
-                <h3>時間</h3>
-                <hr>
-                <p>嗨，<%= username %>，你已經登入，可以開始寫文章囉！</p>
-            </div> -->
         <% } %>
     </div>
-            <!-- <div class="record">
-                <h3>時間</h3>
-                <hr>
-                <p>快來建立屬於你自己的文章吧！</p>
-            </div>
-            <div class="record">
-                <h3>時間</h3>
-                <hr>
-                <p>asdfghjhasdfghjhasdfghjhasdfghjhasdfghjhasdfghjh</p>
-            </div> -->
-    
+
     <div id="posts" style="display:none">
         <%= JSON.stringify(posts) %>
     </div>
