@@ -8,7 +8,8 @@ const ejs = require('ejs');
 const momentTimezone = require('moment-timezone');
 const fs = require('fs'); // file system
 const app = express();
-const port = 3002;
+const portHTTPS = 3002;
+const portHTTP = 3000;
 
 const https = require('https');
 // 讀取密鑰和證書文件
@@ -32,13 +33,13 @@ app.use(session({
 }));
 
 
-
-
+// password: enter your password
+// database: enter your database
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'x0970779073',
-    database: 'task2',
+    password: 'your-password',
+    database: 'your-database',
     charset: 'utf8mb4'
 });
 
@@ -46,7 +47,7 @@ db.connect((err) => {
     if(err){
         throw err;
     }
-    console.log('Connected to MySQL. PORT:' + port);
+    console.log('Connected to MySQL. PORT');
 
     //選擇資料庫
     db.query('USE task2', (err, results) => {
@@ -233,10 +234,11 @@ app.get('/api/getPosts', (req, res) => {
 });
 
 //listen port
-server.listen(3002, 'localhost', () => {
-    console.log(`Server在${port}上執行中(HTTPS)！`);
+
+server.listen(portHTTPS, 'localhost', () => {
+    console.log(`Server在${portHTTPS}上執行中(HTTPS)！`);
 });
 
-app.listen(3000, 'localhost', () => {
-    console.log(`server在${port}上執行中！`);
+app.listen(portHTTP, 'localhost', () => {
+    console.log(`server在${portHTTP}上執行中！`);
 });
